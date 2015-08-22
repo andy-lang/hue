@@ -1,2 +1,4 @@
 # Andrew
+* colouring
+* blending
 * music
