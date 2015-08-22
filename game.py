@@ -47,12 +47,15 @@ class Game:
 	def main(self):
 		while self.running:
 
+			keys = pygame.key.get_pressed()
+			self.hugh.move(keys)
 			for event in pygame.event.get():
 				# events go here
-				if event.type == pygame.QUIT:
+				if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
 					self.running = False
-				elif event.type == pygame.KEYDOWN:
-					self.hugh.move(event.key)
+						
+				# elif event.type == pygame.KEYDOWN:
+				# 	self.hugh.move(event.key)
 
 				
 			
