@@ -32,10 +32,14 @@ class Game:
 	"""Main game logic"""
 
 	def __init__(self, width = 800, height = 600):
-		self.width = width
-		self.height = height
+		pygame.init()
 
-		self.screen = pygame.display.set_mode((width,height))
+		infoObject = pygame.display.Info()
+
+		self.width = infoObject.current_w
+		self.height = infoObject.current_h
+
+		self.screen = pygame.display.set_mode((width, height))
 		pygame.display.set_caption('Hue')
 
 		self.running = True # game will enter loop
