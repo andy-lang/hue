@@ -8,6 +8,9 @@ class Game:
 	def __init__(self, width = 600, height = 600):
 		pygame.init()
 
+		# Set background to white
+		self.bg = (255,255,255)
+
 		#Load all maps into a map array
 		self.maps = glob.glob('./maps/*.txt')
 
@@ -16,6 +19,8 @@ class Game:
 
 		#Set screen to users screen size
 		self.screen = pygame.display.set_mode((self.width, self.height))
+		self.screen.fill(self.bg)
+
 		pygame.display.set_caption('Hue')
 
 		self.running = True # game will enter loop
@@ -50,7 +55,7 @@ class Game:
 				
 			
 
-			self.screen.fill((0,0,0))
+			self.screen.fill(self.bg)
 			pygame.draw.circle(self.screen, (255,0,0), (self.hugh.x, self.hugh.y), self.hugh.radius)
 
 			pygame.display.flip()
