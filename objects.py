@@ -16,6 +16,9 @@ class Hugh(pygame.sprite.DirtySprite):
 		self.screen = pygame.Surface((2*self.radius, 2*self.radius), flags=SRCALPHA) # create screen for the sprite. SRCALPHA means that it'll be transparent where nothing's drawn to it
 		self.upperScreen = screen # parent surface of this one
 
+		# self.mask = pygame.mask.Mask((self.screen.get_width(), self.screen.get_height()))
+
+
 	# Move method. keys should be an array of keypresses, returned by pygame.key.get_pressed().
 	# pygame.event.get() could also be used for this, but would not allow for diagonal movement.
 	def move(self, keys):
@@ -38,6 +41,7 @@ class Hugh(pygame.sprite.DirtySprite):
 	# Draw Hugh's circle onto this screen and blit to the parent screen
 	def draw(self):
 		pygame.draw.circle(self.screen, (255,0,0), (self.radius, self.radius), self.radius)
+		self.mask = pygame.mask.from_surface(self.screen) # update mask
 		self.upperScreen.blit(self.screen, (self.x, self.y))
 	
 
