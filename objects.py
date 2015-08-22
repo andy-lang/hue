@@ -32,8 +32,10 @@ class Hugh(pygame.sprite.DirtySprite):
 		if key[pygame.K_DOWN] or key[pygame.K_s]:
 			yMove += self.speed
 		
-		self.x += xMove
-		self.y += yMove
+		if 0 <= self.x+xMove <= self.upperScreen.get_width()-2*self.radius:
+			self.x += xMove
+		if 0 <= self.y+yMove <= self.upperScreen.get_height()-2*self.radius:
+			self.y += yMove
 
 	def draw(self):
 		pygame.draw.circle(self.screen, (255,0,0), (self.radius, self.radius), self.radius)
