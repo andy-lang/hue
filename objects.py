@@ -38,6 +38,9 @@ class Hugh(pygame.sprite.DirtySprite):
 		if 0 <= self.y+yMove <= self.upperScreen.get_height()-2*self.radius:
 			self.y += yMove
 
+		self.rect = pygame.Rect(self.x-self.radius, self.y-self.radius, 2*self.radius, 2*self.radius)
+
+
 	# Draw Hugh's circle onto this screen and blit to the parent screen
 	def draw(self):
 		pygame.draw.circle(self.screen, (255,0,0), (self.radius, self.radius), self.radius)
