@@ -18,13 +18,13 @@ class Hugh(pygame.sprite.DirtySprite):
 	def move(self, key):
 		xMove = yMove = 0
 		if key[pygame.K_RIGHT] or key[pygame.K_d]:
-			xMove = self.speed
+			xMove += self.speed
 		if key[pygame.K_LEFT] or key[pygame.K_a]:
-			xMove = -self.speed
+			xMove -= self.speed
 		if key[pygame.K_UP] or key[pygame.K_w]:
-			yMove = -self.speed
+			yMove -= self.speed
 		if key[pygame.K_DOWN] or key[pygame.K_s]:
-			yMove = self.speed
+			yMove += self.speed
 		
 		self.x += xMove
 		self.y += yMove
