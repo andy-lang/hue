@@ -39,6 +39,26 @@ class Hugh(pygame.sprite.DirtySprite):
 		pygame.draw.circle(self.screen, (255,0,0), (self.radius, self.radius), self.radius)
 		self.upperScreen.blit(self.screen, (self.x, self.y))
 	
+
+class MaskScreen:
+	"""Screen to mask objects based upon Hugh's position"""
+
+	def __init__(self, upperScreen, width, height):
+		self.width = width
+		self.height = height
+
+		self.maskColour = (0,0,255)
+		self.upperScreen = upperScreen
+
+		self.screen = pygame.Surface((self.width, self.height))
+		self.screen.set_colorkey(self.maskColour)
+
+	def draw(self, hugh):
+		self.screen.fill((255,255,255))
+		pygame.draw.circle(self.screen, self.maskColour, (hugh.x+hugh.radius, hugh.y+hugh.radius), 3*hugh.radius)
+		self.upperScreen.blit(self.screen, (0,0))
+	
+		
 class Wall(pygame.sprite.DirtySprite):
 	"""Representation of a wall block."""
 
