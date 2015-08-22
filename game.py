@@ -32,20 +32,17 @@ class Hugh:
 class Game:
 	"""Main game logic"""
 
-	def __init__(self, width = 800, height = 600):
+	def __init__(self, width = 600, height = 600):
 		pygame.init()
-
-		infoObject = pygame.display.Info()
-
-		#Get user screen width and height
-		self.width = infoObject.current_w
-		self.height = infoObject.current_h
 
 		#Load all maps into a map array
 		self.maps = glob.glob('./maps/*.txt')
 
+		self.width = width
+		self.height = height
+
 		#Set screen to users screen size
-		self.screen = pygame.display.set_mode((800, 600))
+		self.screen = pygame.display.set_mode((self.width, self.height))
 		pygame.display.set_caption('Hue')
 
 		self.running = True # game will enter loop
