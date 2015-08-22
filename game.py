@@ -39,6 +39,9 @@ class Game:
 
 		self.running = True
 		self.framerate = 20
+		self.clock = pygame.time.Clock()
+
+		self.hugh = Hugh(self.width/2, self.height/2)
 
 	def main(self):
 		while self.running:
@@ -47,9 +50,10 @@ class Game:
 				if event.type == pygame.QUIT:
 					self.running = False
 
-		pygame.display.flip()
+			pygame.draw.circle(self.screen, (255,0,0), (self.hugh.x, self.hugh.y), self.hugh.radius)
 
-		self.clock.tick(self.framerate)
+			pygame.display.flip()
+			self.clock.tick(self.framerate)
 	
 	
 window = Game()
