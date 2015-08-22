@@ -1,5 +1,32 @@
 import pygame
 
+class Hugh:
+	"""Representation of moveable player."""
+
+	def __init__(self, x, y, radius = 30):
+		self.radius = radius
+		
+		self.x = x
+		self.y = y
+
+		self.speed = 5
+
+	def move(self, key):
+		xMove = yMove = 0
+		if key == K_RIGHT:
+			xMove = self.speed
+		elif key == K_LEFT:
+			xMove = -self.speed
+		elif key == K_UP:
+			yMove = -self.y_dist
+		elif key == K_DOWN:
+			yMove = self.y_dist
+		
+		self.x += xMove
+		self.y += yMove
+	
+	
+
 class Game:
 	"""Main game logic"""
 
