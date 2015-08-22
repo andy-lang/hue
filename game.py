@@ -95,9 +95,10 @@ class Game:
 			self.screen.fill(self.bg)
 
 			#Check object collisions
-			
-
-			# pygame.draw.rect(self.screen, (0,255,0), pygame.Rect(400,400,20,20)) # Rectangle drawn to main window, for testing alpha and stuff
+			for wall in self.walls:
+				if(pygame.sprite.collide_mask(wall, self.hugh) != None):
+					print "Collision"
+					#self.hugh.collision()
 
 			#Draw map
 			self.all_sprites.draw(self.screen)
