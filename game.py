@@ -26,6 +26,7 @@ class Game:
 		#Set screen to users screen size
 		self.screen = pygame.display.set_mode((self.width, self.height))
 		self.screen.fill(self.bg)
+		self.maskScreen = MaskScreen(self.screen, self.width, self.height)
 
 		pygame.display.set_caption('Hue')
 		pygame.mouse.set_visible(0)
@@ -35,7 +36,7 @@ class Game:
 		self.clock = pygame.time.Clock() # timer
 		pygame.key.set_repeat(self.framerate) # keypresses hold
 
-		self.hugh = Hugh(self.width/2, self.height/2)
+		self.hugh = Hugh(self.screen, self.width/2, self.height/2)
 
 		
 
@@ -93,11 +94,18 @@ class Game:
 
 			self.screen.fill(self.bg)
 
+			# pygame.draw.rect(self.screen, (0,255,0), pygame.Rect(400,400,20,20)) # Rectangle drawn to main window, for testing alpha and stuff
+
 			#Draw map
 			self.all_sprites.draw(self.screen)
-			
-			pygame.draw.circle(self.screen, (255,0,0), (self.hugh.x, self.hugh.y), self.hugh.radius)
 
+			# draw the masking screen
+			self.maskScreen.draw(self.hugh)
+			# self.screen.blit(self.maskScreen, (0,0))
+			
+			# draw Hugh
+			self.hugh.draw()
+			
 			pygame.display.flip()
 			self.clock.tick(self.framerate)
 	
