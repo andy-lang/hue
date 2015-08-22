@@ -10,6 +10,11 @@ class Hugh(pygame.sprite.DirtySprite):
 
 		self.x = x
 		self.y = y
+
+		#set prev variable to store previous positions
+		self.prevX = x
+		self.prevY = y
+
 		self.radius = radius
 		self.speed = 5
 
@@ -37,8 +42,10 @@ class Hugh(pygame.sprite.DirtySprite):
 		
 		# ensures that Hugh doesn't move if about to go off the screen
 		if 0 <= self.x+xMove <= self.upperScreen.get_width()-2*self.radius:
+			self.prevX = self.x
 			self.x += xMove
 		if 0 <= self.y+yMove <= self.upperScreen.get_height()-2*self.radius:
+			self.prevY = self.y
 			self.y += yMove
 
 		self.rect = pygame.Rect(self.x, self.y, 2*self.radius, 2*self.radius)
@@ -49,6 +56,10 @@ class Hugh(pygame.sprite.DirtySprite):
 		pygame.draw.circle(self.screen, (255,0,0), (self.radius, self.radius), self.radius)
 		self.mask = pygame.mask.from_surface(self.image) # update mask
 		self.upperScreen.blit(self.screen, (self.x, self.y))
+
+	def collision(self):
+		self.x = self.prevX
+		self.y = self.prevY
 	
 
 class MaskScreen:

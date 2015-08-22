@@ -52,7 +52,9 @@ class Game:
 			for line in f:
 				line = line.split( )
 
-				if(line[0] == "C"):
+				if(line[0] == "#"):
+					pass
+				elif(line[0] == "C"):
 					self.hugh.x = int(line[1])
 					self.hugh.y = int(line[2])
 				elif(line[0] == "WB"):
@@ -83,6 +85,16 @@ class Game:
 		except Exception, e:
 			raise e
 
+	def resetLevel(self):
+		self.walls.empty()
+		self.goals.empty()
+		self.enemies.empty()
+		self.all_sprites.empty()
+
+		self.level += 1
+
+		self.screen.fill(self.bg)
+
 	def main(self):
 		self.loadMap(self.maps[self.level])
 
@@ -102,17 +114,20 @@ class Game:
 			#Check object collisions
 			for wall in self.walls:
 				if(pygame.sprite.collide_mask(wall, self.hugh) != None):
-					print "Collision"
-					#self.hugh.collision()
+					self.hugh.collision()
 			
 			#Check if Hugh is at the end of the level
-#			for goal in self.goals:
-#				if(pygame.sprite.collide_mask(wall, self.hugh) != None):
-#					self.level += 1
-#					self.loadMap(self.maps[self.leve])
+			for goal in self.goals:
+				if(pygame.sprite.collide_mask(goal, self.hugh) != None):
+					#attempt to load the next level map
+					try:
+						self.resetLevel()
+						self.loadMap(self.maps[self.level])
+					except Exception, e:
+						#No more maps condition !!END GAME!!
+						raise e
 
-
-			#Draw map
+			# draw map
 			self.all_sprites.draw(self.screen)
 
 			# draw the masking screen
