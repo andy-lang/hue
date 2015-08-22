@@ -28,14 +28,13 @@ class Hugh(pygame.sprite.DirtySprite):
 		self.x += xMove
 		self.y += yMove
 
-class WallBlock(pygame.sprite.DirtySprite):
+class Wall(pygame.sprite.DirtySprite):
 	"""Representation of a wall block."""
 
-	def __init__(self, x, y, image):
+	def __init__(self, coord, image):
 		pygame.sprite.DirtySprite.__init__(self)
-		self.image = pygame.image.load(image).convert()
-		self.image.set_colorkey((255, 255, 255))
 
-		#self.rect = self.image.get_rect()
-		self.x = x
-		self.y = y
+		self.image = pygame.image.load(image)#.convert_alpha()
+		#self.image.set_colorkey((255, 255, 255))
+
+		self.rect = self.image.get_rect()
