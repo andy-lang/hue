@@ -100,10 +100,10 @@ class Game:
 			self.screen.fill(self.bg)
 
 			#Check object collisions
-#			for wall in self.walls:
-#				if(pygame.sprite.collide_mask(wall, self.hugh) != None):
-#					print "Collision"
-#					#self.hugh.collision()
+			for wall in self.walls:
+				if(pygame.sprite.collide_mask(wall, self.hugh) != None):
+					print "Collision"
+					#self.hugh.collision()
 			
 			#Check if Hugh is at the end of the level
 #			for goal in self.goals:
