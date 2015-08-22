@@ -2,6 +2,26 @@ import pygame
 from objects import *
 import glob
 
+class MaskScreen:
+	"""Screen to mask objects based upon Hugh's position"""
+
+	def __init__(self, upperScreen, width, height):
+		self.width = width
+		self.height = height
+
+		self.maskColour = (0,0,255)
+		self.upperScreen = upperScreen
+
+		self.screen = pygame.Surface((self.width, self.height))
+		self.screen.set_colorkey(self.maskColour)
+
+	def draw(self, hugh):
+		self.screen.fill((255,255,255))
+		pygame.draw.circle(self.screen, self.maskColour, (hugh.x+hugh.radius, hugh.y+hugh.radius), 3*hugh.radius)
+		self.upperScreen.blit(self.screen, (0,0))
+	
+		
+
 class Game:
 	"""Main game logic"""
 
@@ -23,6 +43,7 @@ class Game:
 		#Set screen to users screen size
 		self.screen = pygame.display.set_mode((800, 600))
 		self.screen.fill(self.bg)
+		self.maskScreen = MaskScreen(self.screen, self.width, self.height)
 		pygame.display.set_caption('Hue')
 
 		self.running = True # game will enter loop
@@ -61,7 +82,13 @@ class Game:
 			
 
 			self.screen.fill(self.bg)
-			# pygame.draw.rect(self.screen, (0,255,0), pygame.Rect(400,400,20,20)) # Rectangle drawn to main window, for testing alpha and stuff
+
+			# draw anything in the level here!
+			pygame.draw.rect(self.screen, (0,255,0), pygame.Rect(400,400,20,20)) # Rectangle drawn to main window, for testing alpha and stuff
+
+			# draw the masking screen
+			self.maskScreen.draw(self.hugh)
+			# self.screen.blit(self.maskScreen, (0,0))
 			
 			# draw Hugh
 			self.hugh.draw()
