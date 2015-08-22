@@ -13,6 +13,9 @@ class Hugh(pygame.sprite.DirtySprite):
 		self.radius = radius
 		self.speed = 5
 
+		#load dummy image
+		self.image = pygame.image.load("./sprites/hugh.png").convert_alpha()
+
 		self.screen = pygame.Surface((2*self.radius, 2*self.radius), flags=SRCALPHA) # create screen for the sprite. SRCALPHA means that it'll be transparent where nothing's drawn to it
 		self.upperScreen = screen # parent surface of this one
 
@@ -38,13 +41,13 @@ class Hugh(pygame.sprite.DirtySprite):
 		if 0 <= self.y+yMove <= self.upperScreen.get_height()-2*self.radius:
 			self.y += yMove
 
-		self.rect = pygame.Rect(self.x-self.radius, self.y-self.radius, 2*self.radius, 2*self.radius)
+		self.rect = pygame.Rect(self.x, self.y, 2*self.radius, 2*self.radius)
 
 
 	# Draw Hugh's circle onto this screen and blit to the parent screen
 	def draw(self):
 		pygame.draw.circle(self.screen, (255,0,0), (self.radius, self.radius), self.radius)
-		self.mask = pygame.mask.from_surface(self.screen) # update mask
+		self.mask = pygame.mask.from_surface(self.image) # update mask
 		self.upperScreen.blit(self.screen, (self.x, self.y))
 	
 
@@ -77,6 +80,8 @@ class Object(pygame.sprite.DirtySprite):
 
 		self.image = pygame.image.load(image).convert_alpha()
 		self.image.set_colorkey((255, 255, 255))
+
+		self.mask = pygame.mask.from_surface(self.image)
 
 		self.rect = self.image.get_rect()
 		self.rect.x = int(coord[0])

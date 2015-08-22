@@ -20,6 +20,8 @@ class Game:
 
 		#Load all maps into a map array
 		self.maps = glob.glob('./maps/*.txt')
+		#Set the level to 0
+		self.level = 0
 
 		# set width and height of game screen
 		self.width = width
@@ -82,7 +84,8 @@ class Game:
 			raise e
 
 	def main(self):
-		self.loadMap("./maps/map1.txt")
+		self.loadMap(self.maps[self.level])
+
 		while self.running:
 
 			# pass all pressed keys to Hugh for processing
@@ -95,6 +98,19 @@ class Game:
 					self.running = False
 
 			self.screen.fill(self.bg)
+
+			#Check object collisions
+			for wall in self.walls:
+				if(pygame.sprite.collide_mask(wall, self.hugh) != None):
+					print "Collision"
+					#self.hugh.collision()
+			
+			#Check if Hugh is at the end of the level
+#			for goal in self.goals:
+#				if(pygame.sprite.collide_mask(wall, self.hugh) != None):
+#					self.level += 1
+#					self.loadMap(self.maps[self.leve])
+
 
 			#Draw map
 			self.all_sprites.draw(self.screen)
