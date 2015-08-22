@@ -10,6 +10,9 @@ class Game:
 
 		#initilise wall object container
 		self.walls = pygame.sprite.Group()
+		self.goals = pygame.sprite.Group()
+		self.enemies = pygame.sprite.Group()
+		self.all_sprites = pygame.sprite.Group()
 
 		# Set background to white
 		self.bg = (255,255,255)
@@ -41,26 +44,35 @@ class Game:
 			#Open map file
 			f = open(fileName, 'r')
 			for line in f:
-				obj = line.split( )
+				line = line.split( )
 
-				if(obj[0] == "WB"):
-					wall = Wall([obj[1], obj[2]], "./sprites/WB.png")
-					self.walls.add(wall)
-				elif(obj[0] == "WT1"):
-					wall = Wall([obj[1], obj[2]], "./sprites/WT1.png")
-					self.walls.add(wall)
-				elif(obj[0] == "WT2"):
-					wall = Wall([obj[1], obj[2]], "./sprites/WT2.png")
-					self.walls.add(wall)
-				elif(obj[0] == "WT3"):
-					wall = Wall([obj[1], obj[2]], "./sprites/WT3.png")
-					self.walls.add(wall)
-				elif(obj[0] == "WT4"):
-					wall = Wall([obj[1], obj[2]], "./sprites/WT4.png")
-					self.walls.add(wall)
-
-				wall.rect.x = int(obj[1])
-				wall.rect.y = int(obj[2])
+				if(line[0] == "C"):
+					self.hugh.x = int(line[1])
+					self.hugh.y = int(line[2])
+				elif(line[0] == "WB"):
+					obj = Object([line[1], line[2]], "./sprites/WB.png")
+					self.walls.add(obj)
+					self.all_sprites.add(obj)
+				elif(line[0] == "WT1"):
+					obj = Object([line[1], line[2]], "./sprites/WT1.png")
+					self.walls.add(obj)
+					self.all_sprites.add(obj)
+				elif(line[0] == "WT2"):
+					obj = Object([line[1], line[2]], "./sprites/WT2.png")
+					self.walls.add(obj)
+					self.all_sprites.add(obj)
+				elif(line[0] == "WT3"):
+					obj = Object([line[1], line[2]], "./sprites/WT3.png")
+					self.walls.add(obj)
+					self.all_sprites.add(obj)
+				elif(line[0] == "WT4"):
+					obj = Object([line[1], line[2]], "./sprites/WT4.png")
+					self.walls.add(obj)
+					self.all_sprites.add(obj)
+				elif(line[0] == "G"):
+					obj = Object([line[1], line[2]], "./sprites/end.png")
+					self.goals.add(obj)
+					self.all_sprites.add(obj)				
 			pass
 		except Exception, e:
 			raise e
@@ -82,7 +94,7 @@ class Game:
 			self.screen.fill(self.bg)
 
 			#Draw map
-			self.walls.draw(self.screen)
+			self.all_sprites.draw(self.screen)
 			
 			pygame.draw.circle(self.screen, (255,0,0), (self.hugh.x, self.hugh.y), self.hugh.radius)
 
