@@ -5,14 +5,11 @@ import glob
 class Game:
 	"""Main game logic"""
 
-	def __init__(self, width = 800, height = 600):
+	def __init__(self, width = 600, height = 600):
 		pygame.init()
 
-		infoObject = pygame.display.Info()
-
-		#Get user screen width and height
-		self.width = infoObject.current_w
-		self.height = infoObject.current_h
+		#initilise wall object container
+		self.walls = pygame.sprite.Group()
 
 		# Set background to white
 		self.bg = (255,255,255)
@@ -20,10 +17,15 @@ class Game:
 		#Load all maps into a map array
 		self.maps = glob.glob('./maps/*.txt')
 
+		self.width = width
+		self.height = height
+
 		#Set screen to users screen size
-		self.screen = pygame.display.set_mode((800, 600))
+		self.screen = pygame.display.set_mode((self.width, self.height))
 		self.screen.fill(self.bg)
+
 		pygame.display.set_caption('Hue')
+		pygame.mouse.set_visible(0)
 
 		self.running = True # game will enter loop
 		self.framerate = 30
@@ -39,12 +41,32 @@ class Game:
 			#Open map file
 			f = open(fileName, 'r')
 			for line in f:
-				print line
+				obj = line.split( )
+
+				if(obj[0] == "WB"):
+					wall = Wall([obj[1], obj[2]], "./sprites/WB.png")
+					self.walls.add(wall)
+				elif(obj[0] == "WT1"):
+					wall = Wall([obj[1], obj[2]], "./sprites/WT1.png")
+					self.walls.add(wall)
+				elif(obj[0] == "WT2"):
+					wall = Wall([obj[1], obj[2]], "./sprites/WT2.png")
+					self.walls.add(wall)
+				elif(obj[0] == "WT3"):
+					wall = Wall([obj[1], obj[2]], "./sprites/WT3.png")
+					self.walls.add(wall)
+				elif(obj[0] == "WT4"):
+					wall = Wall([obj[1], obj[2]], "./sprites/WT4.png")
+					self.walls.add(wall)
+
+				wall.rect.x = int(obj[1])
+				wall.rect.y = int(obj[2])
 			pass
 		except Exception, e:
 			raise e
 
 	def main(self):
+		self.loadMap("./maps/map1.txt")
 		while self.running:
 
 			keys = pygame.key.get_pressed()
@@ -57,10 +79,11 @@ class Game:
 				# elif event.type == pygame.KEYDOWN:
 				# 	self.hugh.move(event.key)
 
-				
-			
-
 			self.screen.fill(self.bg)
+
+			#Draw map
+			self.walls.draw(self.screen)
+			
 			pygame.draw.circle(self.screen, (255,0,0), (self.hugh.x, self.hugh.y), self.hugh.radius)
 
 			pygame.display.flip()
