@@ -82,6 +82,9 @@ class Game:
 
 			self.screen.fill(self.bg)
 
+			#Check object collisions
+			
+
 			# pygame.draw.rect(self.screen, (0,255,0), pygame.Rect(400,400,20,20)) # Rectangle drawn to main window, for testing alpha and stuff
 
 			#Draw map

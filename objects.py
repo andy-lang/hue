@@ -71,3 +71,5 @@ class Wall(pygame.sprite.DirtySprite):
 		#self.image.set_colorkey((255, 255, 255))
 
 		self.rect = self.image.get_rect()
+
+		self.mask = pygame.mask.from_surface(self.image)
