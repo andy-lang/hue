@@ -8,53 +8,54 @@ class Hugh(pygame.sprite.DirtySprite):
 		# Call parent class sprite constructor
 		pygame.sprite.DirtySprite.__init__(self)
 
-		# self.screen = screen
-		self.radius = radius
-		self.screen = pygame.Surface((2*self.radius, 2*self.radius), flags=SRCALPHA) # create screen for the sprite. SRCALPHA means that it'll be transparent where nothing's drawn to it
-		# self.screen.set_colorkey((0,0,0))
-		# self.screen.set_alpha(100)
-
-		self.upperScreen = screen
-		# self.screen.fill((self.upperScreen.bg))
 		self.x = x
 		self.y = y
-
+		self.radius = radius
 		self.speed = 5
 
-	def move(self, key):
+		self.screen = pygame.Surface((2*self.radius, 2*self.radius), flags=SRCALPHA) # create screen for the sprite. SRCALPHA means that it'll be transparent where nothing's drawn to it
+		self.upperScreen = screen # parent surface of this one
+
+	# Move method. keys should be an array of keypresses, returned by pygame.key.get_pressed().
+	# pygame.event.get() could also be used for this, but would not allow for diagonal movement.
+	def move(self, keys):
 		xMove = yMove = 0
-		if key[pygame.K_RIGHT] or key[pygame.K_d]:
+		if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
 			xMove += self.speed
-		if key[pygame.K_LEFT] or key[pygame.K_a]:
+		if keys[pygame.K_LEFT] or keys[pygame.K_a]:
 			xMove -= self.speed
-		if key[pygame.K_UP] or key[pygame.K_w]:
+		if keys[pygame.K_UP] or keys[pygame.K_w]:
 			yMove -= self.speed
-		if key[pygame.K_DOWN] or key[pygame.K_s]:
+		if keys[pygame.K_DOWN] or keys[pygame.K_s]:
 			yMove += self.speed
 		
+		# ensures that Hugh doesn't move if about to go off the screen
 		if 0 <= self.x+xMove <= self.upperScreen.get_width()-2*self.radius:
 			self.x += xMove
 		if 0 <= self.y+yMove <= self.upperScreen.get_height()-2*self.radius:
 			self.y += yMove
 
+	# Draw Hugh's circle onto this screen and blit to the parent screen
 	def draw(self):
 		pygame.draw.circle(self.screen, (255,0,0), (self.radius, self.radius), self.radius)
 		self.upperScreen.blit(self.screen, (self.x, self.y))
 	
 
 class MaskScreen:
-	"""Screen to mask objects based upon Hugh's position"""
+	"""Screen to mask objects based upon Hugh's position.
+	Creates a viewport in effect that forces the player to only be able to see a certain amount of the screen. """
 
 	def __init__(self, upperScreen, width, height):
 		self.width = width
 		self.height = height
 
 		self.maskColour = (0,0,255)
-		self.upperScreen = upperScreen
+		self.upperScreen = upperScreen # parent surface of this one
 
 		self.screen = pygame.Surface((self.width, self.height))
-		self.screen.set_colorkey(self.maskColour)
+		self.screen.set_colorkey(self.maskColour) # set transparent if blue
 
+	# fill screen with white, then draw a viewport around Hugh's position. Then blit to the parent screen
 	def draw(self, hugh):
 		self.screen.fill((255,255,255))
 		pygame.draw.circle(self.screen, self.maskColour, (hugh.x+hugh.radius, hugh.y+hugh.radius), 3*hugh.radius)

@@ -6,6 +6,7 @@ class Game:
 	"""Main game logic"""
 
 	def __init__(self, width = 600, height = 600):
+		# initialise pygame
 		pygame.init()
 
 		#initilise wall object container
@@ -20,6 +21,7 @@ class Game:
 		#Load all maps into a map array
 		self.maps = glob.glob('./maps/*.txt')
 
+		# set width and height of game screen
 		self.width = width
 		self.height = height
 
@@ -28,6 +30,7 @@ class Game:
 		self.screen.fill(self.bg)
 		self.maskScreen = MaskScreen(self.screen, self.width, self.height)
 
+		# few more window options
 		pygame.display.set_caption('Hue')
 		pygame.mouse.set_visible(0)
 
@@ -39,7 +42,7 @@ class Game:
 		self.hugh = Hugh(self.screen, self.width/2, self.height/2)
 
 		
-
+	# load a map file
 	def loadMap(self, fileName):
 		try:
 			#Open map file
@@ -82,15 +85,14 @@ class Game:
 		self.loadMap("./maps/map1.txt")
 		while self.running:
 
+			# pass all pressed keys to Hugh for processing
 			keys = pygame.key.get_pressed()
 			self.hugh.move(keys)
+
 			for event in pygame.event.get():
-				# events go here
+				# press Exit button or ESC key
 				if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
 					self.running = False
-						
-				# elif event.type == pygame.KEYDOWN:
-				# 	self.hugh.move(event.key)
 
 			self.screen.fill(self.bg)
 
@@ -105,7 +107,6 @@ class Game:
 
 			# draw the masking screen
 			self.maskScreen.draw(self.hugh)
-			# self.screen.blit(self.maskScreen, (0,0))
 			
 			# draw Hugh
 			self.hugh.draw()
