@@ -10,9 +10,12 @@ class Hugh(pygame.sprite.DirtySprite):
 
 		# self.screen = screen
 		self.radius = radius
-		self.screen = pygame.Surface((2*self.radius, 2*self.radius))
+		self.screen = pygame.Surface((4*self.radius, 4*self.radius))
+		self.screen.set_colorkey((0,0,0))
+		# self.screen.set_alpha(100)
 
 		self.upperScreen = screen
+		# self.screen.fill((self.upperScreen.bg))
 		self.x = x
 		self.y = y
 
@@ -33,6 +36,6 @@ class Hugh(pygame.sprite.DirtySprite):
 		self.y += yMove
 
 	def draw(self):
-		pygame.draw.circle(self.screen, (255,0,0), (self.radius, self.radius), self.radius)
+		pygame.draw.circle(self.screen, (255,0,0), (2*self.radius, 2*self.radius), self.radius)
 		self.upperScreen.blit(self.screen, (self.x, self.y))
 	
