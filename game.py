@@ -3,7 +3,7 @@ import pygame
 class Hugh:
 	"""Representation of moveable player."""
 
-	def __init__(self, x, y, radius = 30):
+	def __init__(self, x, y, radius = 20):
 		self.radius = radius
 		
 		self.x = x
@@ -39,7 +39,7 @@ class Game:
 		pygame.display.set_caption('Hue')
 
 		self.running = True # game will enter loop
-		self.framerate = 20
+		self.framerate = 30
 		self.clock = pygame.time.Clock() # timer
 		pygame.key.set_repeat(self.framerate) # keypresses hold
 
