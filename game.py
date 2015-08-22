@@ -58,7 +58,7 @@ class Game:
 				elif(obj[0] == "WT4"):
 					wall = Wall([obj[1], obj[2]], "./sprites/WT4.png")
 					self.walls.add(wall)
-				
+
 				wall.rect.x = int(obj[1])
 				wall.rect.y = int(obj[2])
 			pass
@@ -79,10 +79,11 @@ class Game:
 				# elif event.type == pygame.KEYDOWN:
 				# 	self.hugh.move(event.key)
 
+			self.screen.fill(self.bg)
+
 			#Draw map
 			self.walls.draw(self.screen)
-
-			self.screen.fill(self.bg)
+			
 			pygame.draw.circle(self.screen, (255,0,0), (self.hugh.x, self.hugh.y), self.hugh.radius)
 
 			pygame.display.flip()
