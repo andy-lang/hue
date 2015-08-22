@@ -30,7 +30,7 @@ class Game:
 		self.clock = pygame.time.Clock() # timer
 		pygame.key.set_repeat(self.framerate) # keypresses hold
 
-		self.hugh = Hugh(self.width/2, self.height/2)
+		self.hugh = Hugh(self.screen, self.width/2, self.height/2)
 
 		
 
@@ -61,7 +61,9 @@ class Game:
 			
 
 			self.screen.fill(self.bg)
-			pygame.draw.circle(self.screen, (255,0,0), (self.hugh.x, self.hugh.y), self.hugh.radius)
+			
+			# draw Hugh
+			self.hugh.draw()
 
 			pygame.display.flip()
 			self.clock.tick(self.framerate)

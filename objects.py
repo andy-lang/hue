@@ -4,10 +4,11 @@ from pygame.locals import *
 class Hugh(pygame.sprite.DirtySprite):
 	"""Representation of moveable player."""
 
-	def __init__(self, x, y, radius = 20):
+	def __init__(self, screen, x, y, radius = 20):
 		# Call parent class sprite constructor
 		pygame.sprite.DirtySprite.__init__(self)
 
+		self.screen = screen
 		self.radius = radius
 		self.x = x
 		self.y = y
@@ -27,3 +28,7 @@ class Hugh(pygame.sprite.DirtySprite):
 		
 		self.x += xMove
 		self.y += yMove
+
+	def draw(self):
+		pygame.draw.circle(self.screen, (255,0,0), (self.x, self.y), self.radius)
+	
