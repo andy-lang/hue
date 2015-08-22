@@ -28,6 +28,11 @@ class Game:
 
 		self.clock.tick(self.framerate)
 
+	def readLevels(self, fileName):
+		f = open(fileName, 'r')
+		for line in f:
+			print line
+
 
 window = Game()
 window.main()
