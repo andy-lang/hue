@@ -13,14 +13,14 @@ class Hugh:
 
 	def move(self, key):
 		xMove = yMove = 0
-		if key == K_RIGHT:
+		if key == pygame.K_RIGHT:
 			xMove = self.speed
-		elif key == K_LEFT:
+		elif key == pygame.K_LEFT:
 			xMove = -self.speed
-		elif key == K_UP:
-			yMove = -self.y_dist
-		elif key == K_DOWN:
-			yMove = self.y_dist
+		elif key == pygame.K_UP:
+			yMove = -self.speed
+		elif key == pygame.K_DOWN:
+			yMove = self.speed
 		
 		self.x += xMove
 		self.y += yMove
@@ -49,6 +49,8 @@ class Game:
 				# events go here
 				if event.type == pygame.QUIT:
 					self.running = False
+				elif event.type == pygame.KEYDOWN:
+					self.hugh.move(event.key)
 
 			pygame.draw.circle(self.screen, (255,0,0), (self.hugh.x, self.hugh.y), self.hugh.radius)
 
