@@ -61,13 +61,15 @@ class MaskScreen:
 		self.upperScreen.blit(self.screen, (0,0))
 	
 		
-class Wall(pygame.sprite.DirtySprite):
+class Object(pygame.sprite.DirtySprite):
 	"""Representation of a wall block."""
 
 	def __init__(self, coord, image):
 		pygame.sprite.DirtySprite.__init__(self)
 
-		self.image = pygame.image.load(image)#.convert_alpha()
-		#self.image.set_colorkey((255, 255, 255))
+		self.image = pygame.image.load(image).convert_alpha()
+		self.image.set_colorkey((255, 255, 255))
 
 		self.rect = self.image.get_rect()
+		self.rect.x = int(coord[0])
+		self.rect.y = int(coord[1])
