@@ -10,8 +10,8 @@ class Hugh(pygame.sprite.DirtySprite):
 
 		# self.screen = screen
 		self.radius = radius
-		self.screen = pygame.Surface((4*self.radius, 4*self.radius))
-		self.screen.set_colorkey((0,0,0))
+		self.screen = pygame.Surface((4*self.radius, 4*self.radius), flags=SRCALPHA) # create screen for the sprite. SRCALPHA means that it'll be transparent where nothing's drawn to it
+		# self.screen.set_colorkey((0,0,0))
 		# self.screen.set_alpha(100)
 
 		self.upperScreen = screen
