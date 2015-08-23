@@ -25,6 +25,8 @@ class Hugh(pygame.sprite.DirtySprite):
 		self.screen = pygame.Surface((2*self.radius, 2*self.radius), flags=SRCALPHA) # create screen for the sprite. SRCALPHA means that it'll be transparent where nothing's drawn to it
 		self.upperScreen = screen # parent surface of this one
 
+		self.maxDist = self.distance(0, 0, self.upperScreen.get_width(), self.upperScreen.get_height()) # max distance that Hugh could possibly be from a thing
+
 		# self.mask = pygame.mask.Mask((self.screen.get_width(), self.screen.get_height()))
 
 
@@ -57,10 +59,24 @@ class Hugh(pygame.sprite.DirtySprite):
 	def draw(self, objects):
 		pygame.draw.circle(self.screen, (255,0,0), (self.radius, self.radius), self.radius)
 
-		# hue calculation
-		# for i in range(2*self.radius):
-		# 	for j in range(2*self.radius):
-		# 		print self.screen.get_at((i,j))
+		for i in range(2*self.radius):
+			for j in range(2*self.radius):
+				if self.screen.get_at((i,j))[3] > 0:
+					pixelPos = [self.x - self.radius + i, self.y - self.radius + j]
+					newColour = [0,0,0,255]
+					for obj in objects:
+						# dist = ((self.x - obj.rect.x) ** 2 + (self.y - obj.rect.y) ** 2) / self.maxDist
+						dist = (abs(pixelPos[0] - obj.rect.x) + abs(pixelPos[1] - obj.rect.y)) / self.maxDist
+						intensity = (dist-1)**4
+						if obj.objtype == "goal":
+							newColour[1] += 255 * intensity
+						elif obj.objtype == "enemy":
+							newColour[0] += 255 * intensity
+					self.screen.set_at((i,j), newColour)
+					
+
+						
+
 
 		self.mask = pygame.mask.from_surface(self.image) # update mask
 		self.upperScreen.blit(self.screen, (self.x, self.y))
@@ -68,6 +84,10 @@ class Hugh(pygame.sprite.DirtySprite):
 	def collision(self):
 		self.x = self.prevX
 		self.y = self.prevY
+
+	def distance(self, x1, y1, x2, y2):
+		return ((x1-x2)**2 + (y1-y2)**2)**0.5
+	
 	
 
 class MaskScreen:
@@ -110,7 +130,7 @@ class Object(pygame.sprite.DirtySprite):
 class Enemy(pygame.sprite.DirtySprite):
 	"""Representation of ememy"""
 
-	def __init__(self, coord, direction, speed, screen, image):
+	def __init__(self, coord, direction, speed, screen, image, objtype):
 		pygame.sprite.DirtySprite.__init__(self)
 
 		self.image = pygame.image.load(image).convert_alpha()
@@ -121,6 +141,8 @@ class Enemy(pygame.sprite.DirtySprite):
 		self.rect = self.image.get_rect()
 		self.rect.x = int(coord[0])
 		self.rect.y = int(coord[1])
+	
+		self.objtype = objtype
 
 		self.direction = int(direction) * math.pi / 180
 		self.speed = int(speed)
