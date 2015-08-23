@@ -8,7 +8,7 @@ class Music:
 	def __init__(self, upperscreen):
 		pygame.mixer.init()
 
-		self.NEAR_MUSIC_MAX = 0.18
+		self.NEAR_MUSIC_MAX = 0.2
 		self.FAR_MUSIC_MAX = 1.0
 		self.nearMusic = pygame.mixer.Sound('sound/near.ogg')
 		self.nearMusic.set_volume(self.NEAR_MUSIC_MAX)
@@ -16,8 +16,8 @@ class Music:
 		self.farMusic = pygame.mixer.Sound('sound/far.ogg')
 		self.farMusic.set_volume(self.FAR_MUSIC_MAX)
 
-		# self.nearMusic.play()
-		self.farMusic.play()
+		self.nearMusic.play(-1)
+		self.farMusic.play(-1)
 
 		self.maxDist = (upperscreen.get_width() ** 2 + upperscreen.get_height() ** 2)**0.5
 
@@ -25,37 +25,46 @@ class Music:
 		goal = goal.sprites()
 		enemies = enemies.sprites()
 		hughPos = [hugh.x, hugh.y]
+		newFarVol = self.farMusic.get_volume()
+		newNearVol = self.nearMusic.get_volume()
 
 		if len(goal) > 0:
 			goalPos = [goal[0].rect.x+10, goal[0].rect.y+10]
 			goalDist = ((hugh.x - goal[0].rect.x)**2 + (hugh.y - goal[0].rect.y)**2)**0.5 / self.maxDist
-			intensity = (goalDist - 1) ** 4
+			intensity = (goalDist - 1) ** 2
 			newFarVol = self.FAR_MUSIC_MAX * intensity
-			print newFarVol
-			self.farMusic.set_volume(newFarVol)
-			# newFarVol = goalDist/self.maxDist
-			# newFarVol /= self.FAR_MUSIC_MAX
 			# self.farMusic.set_volume(newFarVol)
-			# print newFarVol
-
+		else:
+			newFarVol = 0
 
 		if len(enemies) > 0:
-			minDist = ((hugh.x - enemies[0].rect.x)**2 + (hugh.y - enemies[0].rect.y)**2)
+			minDist = ((hugh.x - enemies[0].rect.x)**2 + (hugh.y - enemies[0].rect.y)**2)**0.5
 			minEn = enemies[0]
 			for e in enemies:
-				dist = ((hugh.x - e.rect.x)**2 + (hugh.y - e.rect.y)**2)
+				dist = ((hugh.x - e.rect.x)**2 + (hugh.y - e.rect.y)**2)**0.5
 				if dist < minDist:
 					minEn = e
 
-			# print minEn.rect.x, minEn.rect.y
+			minDist /= self.maxDist
+			intensity = (minDist - 1) ** 2
+			newNearVol = self.NEAR_MUSIC_MAX * intensity
+			# self.nearMusic.set_volume(newNearVol)
+		else:
+			newNearVol = 0
+
+		# print newFarVol, newNearVol
+		if newFarVol > 0 or newNearVol > 0:
+			total = newFarVol + newNearVol
+			print newFarVol/total, newNearVol/total
+			self.farMusic.set_volume(newFarVol/total)
+			self.nearMusic.set_volume(newNearVol/total)
+		else:
+			# neither enemy nor goal. So just play the nice one
+			self.nearMusic.fadeout(5000)
+			# self.nearMusic.set_volume(0)
+			self.farMusic.set_volume(self.FAR_MUSIC_MAX)
 
 
-					
-
-				
-		# enemies = sorted(enemies, key=lambda enemies.)
-	
-	
 class Game:
 	"""Main game logic"""
 
