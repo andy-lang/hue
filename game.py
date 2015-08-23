@@ -57,6 +57,10 @@ class Game:
 				elif(line[0] == "C"):
 					self.hugh.x = int(line[1])
 					self.hugh.y = int(line[2])
+				elif(line[0] == "E"):
+					obj = Enemy([line[1], line[2]], line[3], line[4], self.screen, "./sprites/E.png")
+					self.enemies.add(obj)
+					self.all_sprites.add(obj)
 				elif(line[0] == "WB"):
 					obj = Object([line[1], line[2]], "./sprites/WB.png", "wall")
 					self.walls.add(obj)
@@ -91,8 +95,6 @@ class Game:
 		self.enemies.empty()
 		self.all_sprites.empty()
 
-		self.level += 1
-
 		self.screen.fill(self.bg)
 
 	def main(self):
@@ -111,10 +113,23 @@ class Game:
 
 			self.screen.fill(self.bg)
 
-			#Check object collisions
+			#Move/check enemy collisions
+			for e in self.enemies:
+				e.move()
+				for w in self.walls:
+					if(pygame.sprite.collide_mask(w, e) != None):
+						e.collision()
+
+			#Check wall collisions
 			for wall in self.walls:
 				if(pygame.sprite.collide_mask(wall, self.hugh) != None):
 					self.hugh.collision()
+
+			#Check Hugh and enemy collisions
+			for e in self.enemies:
+				if(pygame.sprite.collide_mask(e, self.hugh) != None):
+					self.resetLevel()
+					self.loadMap(self.maps[self.level])
 			
 			#Check if Hugh is at the end of the level
 			for goal in self.goals:
@@ -122,6 +137,7 @@ class Game:
 					#attempt to load the next level map
 					try:
 						self.resetLevel()
+						self.level += 1
 						self.loadMap(self.maps[self.level])
 					except Exception, e:
 						#No more maps condition !!END GAME!!
