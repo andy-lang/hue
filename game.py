@@ -58,31 +58,31 @@ class Game:
 					self.hugh.x = int(line[1])
 					self.hugh.y = int(line[2])
 				elif(line[0] == "E"):
-					obj = Enemy([line[1], line[2]], line[3], line[4], self.screen, "./sprites/E.png")
+					obj = Enemy([line[1], line[2]], line[3], line[4], self.screen, "./sprites/E.png", "enemy")
 					self.enemies.add(obj)
 					self.all_sprites.add(obj)
 				elif(line[0] == "WB"):
-					obj = Object([line[1], line[2]], "./sprites/WB.png")
+					obj = Object([line[1], line[2]], "./sprites/WB.png", "wall")
 					self.walls.add(obj)
 					self.all_sprites.add(obj)
 				elif(line[0] == "WT1"):
-					obj = Object([line[1], line[2]], "./sprites/WT1.png")
+					obj = Object([line[1], line[2]], "./sprites/WT1.png", "wall")
 					self.walls.add(obj)
 					self.all_sprites.add(obj)
 				elif(line[0] == "WT2"):
-					obj = Object([line[1], line[2]], "./sprites/WT2.png")
+					obj = Object([line[1], line[2]], "./sprites/WT2.png", "wall")
 					self.walls.add(obj)
 					self.all_sprites.add(obj)
 				elif(line[0] == "WT3"):
-					obj = Object([line[1], line[2]], "./sprites/WT3.png")
+					obj = Object([line[1], line[2]], "./sprites/WT3.png", "wall")
 					self.walls.add(obj)
 					self.all_sprites.add(obj)
 				elif(line[0] == "WT4"):
-					obj = Object([line[1], line[2]], "./sprites/WT4.png")
+					obj = Object([line[1], line[2]], "./sprites/WT4.png", "wall")
 					self.walls.add(obj)
 					self.all_sprites.add(obj)
 				elif(line[0] == "G"):
-					obj = Object([line[1], line[2]], "./sprites/end.png")
+					obj = Object([line[1], line[2]], "./sprites/end.png", "goal")
 					self.goals.add(obj)
 					self.all_sprites.add(obj)				
 			pass
@@ -150,7 +150,7 @@ class Game:
 			self.maskScreen.draw(self.hugh)
 			
 			# draw Hugh
-			self.hugh.draw()
+			self.hugh.draw(self.goals.sprites() + self.enemies.sprites())
 			
 			pygame.display.flip()
 			self.clock.tick(self.framerate)
