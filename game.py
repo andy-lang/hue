@@ -55,13 +55,11 @@ class Music:
 		# print newFarVol, newNearVol
 		if newFarVol > 0 or newNearVol > 0:
 			total = newFarVol + newNearVol
-			print newFarVol/total, newNearVol/total
 			self.farMusic.set_volume(newFarVol/total)
 			self.nearMusic.set_volume(newNearVol/total)
 		else:
 			# neither enemy nor goal. So just play the nice one
-			self.nearMusic.fadeout(5000)
-			# self.nearMusic.set_volume(0)
+			self.nearMusic.fadeout(5000) # fade out the old if it's there
 			self.farMusic.set_volume(self.FAR_MUSIC_MAX)
 
 
