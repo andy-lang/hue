@@ -2,6 +2,60 @@ import pygame
 from objects import *
 import glob
 
+class Music:
+	"""Mixer for music depending on Hugh's location to enemies and goal"""
+
+	def __init__(self, upperscreen):
+		pygame.mixer.init()
+
+		self.NEAR_MUSIC_MAX = 0.18
+		self.FAR_MUSIC_MAX = 1.0
+		self.nearMusic = pygame.mixer.Sound('sound/near.ogg')
+		self.nearMusic.set_volume(self.NEAR_MUSIC_MAX)
+
+		self.farMusic = pygame.mixer.Sound('sound/far.ogg')
+		self.farMusic.set_volume(self.FAR_MUSIC_MAX)
+
+		# self.nearMusic.play()
+		self.farMusic.play()
+
+		self.maxDist = (upperscreen.get_width() ** 2 + upperscreen.get_height() ** 2)**0.5
+
+	def update(self, hugh, goal, enemies):
+		goal = goal.sprites()
+		enemies = enemies.sprites()
+		hughPos = [hugh.x, hugh.y]
+
+		if len(goal) > 0:
+			goalPos = [goal[0].rect.x+10, goal[0].rect.y+10]
+			goalDist = ((hugh.x - goal[0].rect.x)**2 + (hugh.y - goal[0].rect.y)**2)**0.5 / self.maxDist
+			intensity = (goalDist - 1) ** 4
+			newFarVol = self.FAR_MUSIC_MAX * intensity
+			print newFarVol
+			self.farMusic.set_volume(newFarVol)
+			# newFarVol = goalDist/self.maxDist
+			# newFarVol /= self.FAR_MUSIC_MAX
+			# self.farMusic.set_volume(newFarVol)
+			# print newFarVol
+
+
+		if len(enemies) > 0:
+			minDist = ((hugh.x - enemies[0].rect.x)**2 + (hugh.y - enemies[0].rect.y)**2)
+			minEn = enemies[0]
+			for e in enemies:
+				dist = ((hugh.x - e.rect.x)**2 + (hugh.y - e.rect.y)**2)
+				if dist < minDist:
+					minEn = e
+
+			# print minEn.rect.x, minEn.rect.y
+
+
+					
+
+				
+		# enemies = sorted(enemies, key=lambda enemies.)
+	
+	
 class Game:
 	"""Main game logic"""
 
@@ -9,7 +63,7 @@ class Game:
 		# initialise pygame
 		pygame.init()
 
-		#initilise wall object container
+		#initialise wall object container
 		self.walls = pygame.sprite.Group()
 		self.goals = pygame.sprite.Group()
 		self.enemies = pygame.sprite.Group()
@@ -42,6 +96,8 @@ class Game:
 		pygame.key.set_repeat(self.framerate) # keypresses hold
 
 		self.hugh = Hugh(self.screen, self.width/2, self.height/2)
+
+		self.music = Music(self.screen)
 
 		
 	# load a map file
@@ -152,6 +208,7 @@ class Game:
 			# draw Hugh
 			self.hugh.draw(self.goals.sprites() + self.enemies.sprites())
 			
+			self.music.update(self.hugh, self.goals, self.enemies)
 			pygame.display.flip()
 			self.clock.tick(self.framerate)
 	

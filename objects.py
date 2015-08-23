@@ -74,10 +74,6 @@ class Hugh(pygame.sprite.DirtySprite):
 							newColour[0] += 255 * intensity
 					self.screen.set_at((i,j), newColour)
 					
-
-						
-
-
 		self.mask = pygame.mask.from_surface(self.image) # update mask
 		self.upperScreen.blit(self.screen, (self.x, self.y))
 
