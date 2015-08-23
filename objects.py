@@ -17,7 +17,7 @@ class Hugh(pygame.sprite.DirtySprite):
 		self.prevY = y
 
 		self.radius = radius
-		self.speed = 5
+		self.speed = 2
 
 		#load dummy image
 		self.image = pygame.image.load("./sprites/hugh.png").convert_alpha()
@@ -107,7 +107,7 @@ class MaskScreen:
 	# fill screen with white, then draw a viewport around Hugh's position. Then blit to the parent screen
 	def draw(self, hugh):
 		self.screen.fill((255,255,255))
-		pygame.draw.circle(self.screen, self.maskColour, (hugh.x+hugh.radius, hugh.y+hugh.radius), 3*hugh.radius)
+		pygame.draw.circle(self.screen, self.maskColour, (hugh.x+hugh.radius, hugh.y+hugh.radius), int(2.2*hugh.radius))
 		self.upperScreen.blit(self.screen, (0,0))
 	
 		
