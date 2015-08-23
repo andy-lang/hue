@@ -7,6 +7,7 @@ Feel free to add/edit anything in here, just **don't** delete anything :)
 To-Do for this Doc
 ----------------------------
 1. Sort things in a logical manner
+2. Edit layout
 
 Ideas
 --------------------------
