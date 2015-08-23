@@ -19,7 +19,7 @@ class Game:
 		self.bg = (255,255,255)
 
 		#Load all maps into a map array
-		self.maps = glob.glob('./maps/*.txt')
+		self.maps = sorted(glob.glob('./maps/*.txt'))
 		#Set the level to 0
 		self.level = 0
 
