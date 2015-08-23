@@ -1,4 +1,5 @@
 import pygame
+import math
 from pygame.locals import *
 
 class Hugh(pygame.sprite.DirtySprite):
@@ -97,3 +98,44 @@ class Object(pygame.sprite.DirtySprite):
 		self.rect = self.image.get_rect()
 		self.rect.x = int(coord[0])
 		self.rect.y = int(coord[1])
+
+class Enemy(pygame.sprite.DirtySprite):
+	"""Representation of ememy"""
+
+	def __init__(self, coord, direction, speed, screen, image):
+		pygame.sprite.DirtySprite.__init__(self)
+
+		self.image = pygame.image.load(image).convert_alpha()
+		self.image.set_colorkey((255,255,255))
+
+		self.mask = pygame.mask.from_surface(self.image)
+
+		self.rect = self.image.get_rect()
+		self.rect.x = int(coord[0])
+		self.rect.y = int(coord[1])
+
+		self.direction = int(direction) * math.pi / 180
+		self.speed = int(speed)
+
+		self.screen = screen
+		self.radius = 10
+
+	def move(self):
+		moveX = math.sin(self.direction)*self.speed
+		moveY = math.cos(self.direction)*self.speed
+
+		if 0 <= self.rect.x+moveX <= self.screen.get_width()-2*self.radius:
+			self.rect.x += moveX
+		if 0 <= self.rect.y+moveY <= self.screen.get_height()-2*self.radius:
+			self.rect.y += moveY
+
+	def collision(self):
+		if(self.direction == 0):
+			self.direction = math.pi
+		elif(self.direction == math.pi/2):
+			self.direction = 3*math.pi/2
+		elif(self.direction == math.pi):
+			self.direction = 0
+		elif(self.direction == 3*math.pi/2):
+			self.direction = math.pi/2
+		self.move()
