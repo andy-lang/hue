@@ -11,12 +11,12 @@ class Music:
 		self.NEAR_MUSIC_MAX = 0.2
 		self.FAR_MUSIC_MAX = 1.0
 		self.nearMusic = pygame.mixer.Sound('sound/near.ogg')
-		self.nearMusic.set_volume(self.NEAR_MUSIC_MAX)
+		self.nearMusic.set_volume(0)
 
 		self.farMusic = pygame.mixer.Sound('sound/far.ogg')
-		self.farMusic.set_volume(self.FAR_MUSIC_MAX)
+		self.farMusic.set_volume(0)
 
-		self.nearMusic.play(-1)
+		# self.nearMusic.play(-1)
 		self.farMusic.play(-1)
 
 		self.maxDist = (upperscreen.get_width() ** 2 + upperscreen.get_height() ** 2)**0.5
@@ -48,14 +48,15 @@ class Music:
 			minDist /= self.maxDist
 			intensity = (minDist - 1) ** 2
 			newNearVol = self.NEAR_MUSIC_MAX * intensity
-			# self.nearMusic.set_volume(newNearVol)
 		else:
 			newNearVol = 0
 
-		# print newFarVol, newNearVol
 		if newFarVol > 0 or newNearVol > 0:
 			total = newFarVol + newNearVol
 			self.farMusic.set_volume(newFarVol/total)
+			if self.nearMusic.get_volume() == 0 and newNearVol > 0:
+				print "HERE"
+				self.nearMusic.play(-1, fade_ms = 5000)
 			self.nearMusic.set_volume(newNearVol/total)
 		else:
 			# neither enemy nor goal. So just play the nice one
