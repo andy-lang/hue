@@ -17,7 +17,7 @@ class Hugh(pygame.sprite.DirtySprite):
 		self.prevY = y
 
 		self.radius = radius
-		self.speed = 3
+		self.speed = 2
 
 		#load dummy image
 		self.image = pygame.image.load("./sprites/hugh.png").convert_alpha()

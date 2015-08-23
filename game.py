@@ -52,11 +52,12 @@ class Music:
 			newNearVol = 0
 
 		if newFarVol > 0 or newNearVol > 0:
-			total = newFarVol + newNearVol
+			total = 1
+			if newFarVol > 0 and newNearVol > 0:
+				total = newFarVol + newNearVol
 
 			self.farMusic.set_volume(newFarVol/total)
 			if self.nearMusic.get_volume() == 0 and newNearVol > 0:
-				print "HERE"
 				self.nearMusic.play(-1, fade_ms = 5000)
 			self.nearMusic.set_volume(newNearVol/total)
 		else:
@@ -203,10 +204,14 @@ class Game:
 					try:
 						self.resetLevel()
 						self.level += 1
-						self.loadMap(self.maps[self.level])
+						if self.level >= len(self.maps):
+							self.running = False
+						else:
+							self.loadMap(self.maps[self.level])
 					except Exception, e:
 						#No more maps condition !!END GAME!!
 						raise e
+						# pygame.quit()
 
 			# draw map
 			self.all_sprites.draw(self.screen)
