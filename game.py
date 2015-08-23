@@ -55,7 +55,7 @@ class Music:
 		# print newFarVol, newNearVol
 		if newFarVol > 0 or newNearVol > 0:
 			total = newFarVol + newNearVol
-			print newFarVol/total, newNearVol/total
+			#print newFarVol/total, newNearVol/total
 			self.farMusic.set_volume(newFarVol/total)
 			self.nearMusic.set_volume(newNearVol/total)
 		else:
