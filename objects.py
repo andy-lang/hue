@@ -52,8 +52,15 @@ class Hugh(pygame.sprite.DirtySprite):
 
 
 	# Draw Hugh's circle onto this screen and blit to the parent screen
-	def draw(self):
+	# param objects is a list of objects in the world to check Hugh's position against, to check for colour
+	def draw(self, objects):
 		pygame.draw.circle(self.screen, (255,0,0), (self.radius, self.radius), self.radius)
+
+		# hue calculation
+		# for i in range(2*self.radius):
+		# 	for j in range(2*self.radius):
+		# 		print self.screen.get_at((i,j))
+
 		self.mask = pygame.mask.from_surface(self.image) # update mask
 		self.upperScreen.blit(self.screen, (self.x, self.y))
 
@@ -86,13 +93,14 @@ class MaskScreen:
 class Object(pygame.sprite.DirtySprite):
 	"""Representation of a wall block."""
 
-	def __init__(self, coord, image):
+	def __init__(self, coord, image, objtype):
 		pygame.sprite.DirtySprite.__init__(self)
 
 		self.image = pygame.image.load(image).convert_alpha()
 		self.image.set_colorkey((255, 255, 255))
 
 		self.mask = pygame.mask.from_surface(self.image)
+		self.objtype = objtype
 
 		self.rect = self.image.get_rect()
 		self.rect.x = int(coord[0])
