@@ -65,18 +65,18 @@ class Hugh(pygame.sprite.DirtySprite):
 					pixelPos = [self.x - self.radius + i, self.y - self.radius + j]
 					newColour = [0,0,0,255]
 					for obj in objects:
-						# dist = ((self.x - obj.rect.x) ** 2 + (self.y - obj.rect.y) ** 2) / self.maxDist
-						dist = (abs(pixelPos[0] - obj.rect.x) + abs(pixelPos[1] - obj.rect.y)) / self.maxDist
+						dist = ((pixelPos[0] - obj.rect.x) ** 2 + (pixelPos[1] - obj.rect.y) ** 2) ** 0.5 / self.maxDist
+						#dist = (abs(pixelPos[0] - obj.rect.x) + abs(pixelPos[1] - obj.rect.y)) / self.maxDist
 						intensity = (dist-1)**4
 						if obj.objtype == "goal":
 							newColour[1] += 255 * intensity
+							if(newColour[1] > 255):
+								newColour[1] = 255
 						elif obj.objtype == "enemy":
 							newColour[0] += 255 * intensity
+							if(newColour[0] > 255):
+								newColour[0] = 255
 					self.screen.set_at((i,j), newColour)
-					
-
-						
-
 
 		self.mask = pygame.mask.from_surface(self.image) # update mask
 		self.upperScreen.blit(self.screen, (self.x, self.y))
