@@ -53,6 +53,7 @@ class Music:
 
 		if newFarVol > 0 or newNearVol > 0:
 			total = newFarVol + newNearVol
+
 			self.farMusic.set_volume(newFarVol/total)
 			if self.nearMusic.get_volume() == 0 and newNearVol > 0:
 				print "HERE"
