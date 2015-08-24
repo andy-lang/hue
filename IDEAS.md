@@ -31,3 +31,4 @@ Ideas
 17. Visual map editor ingame
 18. options,  eg sound volume
 19. Screen edges bleed colour into "Fog of war" area based on game context,  eg: if we're surrounded by "enemy" colours the screen starts to fade toward that colour
+20. Incremental music
