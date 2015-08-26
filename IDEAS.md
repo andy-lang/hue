@@ -51,3 +51,14 @@ eg sound volume
 19. Screen edges bleed colour into "Fog of war" area based on game context  
 eg: if we're surrounded by "enemy" colours the screen starts to fade toward that colour
 20. Incremental music
+21. Chameleon colours
+22. Different game modes:
+      -story
+      -survival
+      -infection
+      -dark mode
+23. Multiplayer modes
+      -chasey
+      -CTF
+      -Team deathmatch (?)
+24. 
