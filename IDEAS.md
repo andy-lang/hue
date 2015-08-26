@@ -33,7 +33,7 @@ pass through odd shapes
 increase size to touch multiple goals at once
 9. Hugh has no pronoun  
 refer to hugh as you etc
-10. [potential source of quotes](https://www.facebook.com/l.php?u=https%3A%2F%2Fwww.goodreads.com%2Fwork%2Fquotes%2F100074&h=OAQHhrlMI&s=1)
+10. [potential source of quotes](https://www.goodreads.com/work/quotes/100074)
 11. Change effect of colours based on player interaction (challenge the players prejudices re: colours)
 12. Break levels into sets based on colours  
 maybe also to introduce game mechanics
