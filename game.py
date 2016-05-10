@@ -17,9 +17,15 @@ class Music:
         self.farMusic.set_volume(0)
 
         # self.nearMusic.play(-1)
-        self.farMusic.play(-1)
 
         self.maxDist = (upperscreen.get_width() ** 2 + upperscreen.get_height() ** 2)**0.5
+
+    def begin(self):
+        self.farMusic.play(-1)
+
+    def stop(self):
+        self.nearMusic.fadeout(3000)
+        self.farMusic.fadeout(3000)
 
     def update(self, hugh, goal, enemies):
         goal = goal.sprites()
@@ -207,11 +213,14 @@ class Game:
                             if self.level >= len(self.maps):
                                 self.state = 1
                                 self.level = 0
+                                self.music.stop()
                             else:
                                 self.loadMap(self.maps[self.level])
                         except Exception, e:
                             #No more maps condition !!END GAME!!
                             self.state = 1
+                            self.level = 0
+                            self.music.stop()
                         # pygame.quit()
 
                 # draw map
@@ -242,6 +251,7 @@ class Game:
                         self.level = 0
                         self.resetLevel()
                         self.loadMap(self.maps[self.level])
+                        self.music.begin()
 
             pygame.display.flip()
             self.clock.tick(self.framerate)
