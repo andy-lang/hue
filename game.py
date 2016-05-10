@@ -8,12 +8,12 @@ class Music:
     def __init__(self, upperscreen):
         pygame.mixer.init()
 
-        self.NEAR_MUSIC_MAX = 0.2
+        self.NEAR_MUSIC_MAX = 0.5
         self.FAR_MUSIC_MAX = 1.0
-        self.nearMusic = pygame.mixer.Sound('sound/near.ogg')
+        self.nearMusic = pygame.mixer.Sound('sound/near-new.ogg')
         self.nearMusic.set_volume(0)
 
-        self.farMusic = pygame.mixer.Sound('sound/far.ogg')
+        self.farMusic = pygame.mixer.Sound('sound/far-new.ogg')
         self.farMusic.set_volume(0)
 
         # self.nearMusic.play(-1)
